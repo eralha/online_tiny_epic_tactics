@@ -1,0 +1,28 @@
+﻿
+    <div class="c-layer">
+        <div class="bg"></div>
+        <div class="content">
+
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Create a new game</h5>
+                    <p class="card-text">Only a max of 2 players per game</p>
+
+                    <form>
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Game name:" ng-model="form.GameName">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="password:" ng-model="form.GamePass">
+                        </div>
+                    </form>
+
+                    <div class="mt_20">
+                        <button type="button" class="btn btn-success" ng-click="createNewGame();">Send</button>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
