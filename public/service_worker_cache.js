@@ -1,6 +1,6 @@
-var cacheNamesToDelete = ['web-assets_v1', 'web-assets_v2', 'web-assets_v3', 'web-assets_v4', 'web-assets_v5', 'web-assets_v6', 'web-assets_v7', 'web-assets_v8', 'web-assets_v9', 'web-assets_v10', 'web-assets_v11', 'web-assets_v12', 'v13', 'v14', 'v15'];//old caches to delete on a new service worker activation
+var cacheNamesToDelete = [];//old caches to delete on a new service worker activation
 var version = '061502FB4D6E55BBB43DE53A2D7FB73F0F2A98EF70AEF00E8BF812E889EF574D';
-var cacheName = 'v16';
+var cacheName = 'v1';
 
 self.addEventListener('install', function(event) {
     console.log('install');
