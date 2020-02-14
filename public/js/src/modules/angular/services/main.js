@@ -128,6 +128,10 @@ define('module/angular/services/main', [], function () {
                 socket.on('msg', function (data) {
                     console.log('received', data, $rootScope);
 				});
+
+				socket.on('emit', function (data) {
+                    console.log('received', data, $rootScope);
+				});
 				
 			this.createNewGame = function(GameName){
 				socket.emit('createGame', {name: GameName});
