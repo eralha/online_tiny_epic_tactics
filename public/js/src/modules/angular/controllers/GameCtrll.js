@@ -20,20 +20,9 @@ define('module/angular/controllers/GameCtrll', [
 			//If a game object does not exist for this state change to home view
 			if(!$rootScope.game){ $state.go('home'); }
 
-			//get current chat messages if any
-			scope.getChatMsgs = function(){
-				if(!$rootScope.game){ return; }
-				scope.chatMsgs = dataService.getChatMessages($rootScope.game.ID);
-			}
-			scope.getChatMsgs();
-			
-			var OFFchatMsgReceived = $rootScope.$on('chatMsgReceived', function(e, chatMsg){
-				scope.getChatMsgs();
-			});
-
 			$rootScope.$on('$viewContentLoading', 
 			function(event, toState, toParams, fromState, fromParams, options){ 
-				OFFchatMsgReceived();
+				
 			});
 
 		}]);

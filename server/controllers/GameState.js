@@ -23,6 +23,13 @@ function PlayerObject(socketID){
 }
 
 function GameState(){
+    this.imagesAssetsPath = config.imagesAssetsPath;
+    this.heroesData = {
+        wizard: [],
+        rogue: [],
+        knight: [],
+        beast: []
+    }
     this.stateObject = {
         playerList: [],
         flags: [
@@ -57,6 +64,7 @@ GameState.prototype.destroy = function(){
 
 GameState.prototype.addPlayer = function(socketID){
     var player = new PlayerObject(socketID);
+
         player.data.heroes.push(new HeroObject());
 
     this.stateObject.playerList.push(player);

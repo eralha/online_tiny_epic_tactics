@@ -6,7 +6,8 @@ var config = {
 	serverPort: process.env.PORT || 3000,
     dbConnectionString : process.env.DATABASE_URL || '',
     appId: '', 
-	appSecret: '',
+    appSecret: '',
+    imagesAssetsPath: '/images/'
 };
 
 config.jsonDigest = function(input){
