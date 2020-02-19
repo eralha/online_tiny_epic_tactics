@@ -2,6 +2,5 @@
 <div class="c-game_panel"></div>
 
 <div class="c-chat_panel">
-    <div class="msg">Hello</div>
-    <div class="msg own">Hello</div>
+    <div class="msg" ng-repeat="msg in chatMsgs">{{msg.msg}}</div>
 </div>

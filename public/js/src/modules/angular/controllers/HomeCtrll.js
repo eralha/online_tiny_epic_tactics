@@ -17,10 +17,25 @@ define('module/angular/controllers/HomeCtrll', [
 		app.controller('HomeCtrll', ['$scope', '$rootScope', 'dataService', 'gameDataService', 'ngProgressFactory', '$state', '$sce', '$filter',
 		function(scope, $rootScope, dataService, gameDataService, ngProgressFactory, $state, $sce, $filter) {
 
-			$rootScope.$on('createGameSuccess', function(e, game){
+			var OFFcreateGameSuccess = $rootScope.$on('createGameSuccess', function(e, game){
 				$rootScope.game = game;
 				$state.go('game', {gameID: game.ID});
 			});
+
+			var OFFjoinGameSuccess = $rootScope.$on('joinGameSuccess', function(e, game){
+				$rootScope.game = game;
+				$state.go('game', {gameID: game.ID});
+			});
+
+			$rootScope.$on('$viewContentLoading', 
+			function(event, toState, toParams, fromState, fromParams, options){ 
+				OFFcreateGameSuccess();
+				OFFjoinGameSuccess();
+			});
+
+			scope.joinGame = function(gameID){
+				dataService.joinGame(gameID);
+			}
 
 			//force remove this socket from any game
 			console.log('HomeCtrll - removing from game');

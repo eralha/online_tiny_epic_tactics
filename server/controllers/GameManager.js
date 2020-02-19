@@ -18,6 +18,31 @@ GameManager.prototype.createGame = function(socket, gameName){
     return game;
 }
 
+GameManager.prototype.leaveGame = function(socket){
+    //get the game for this socket
+    var game = this.getGameBySocketID(socket.id);
+
+    //if we found a game for this socket, remove it from this game
+    if(game){
+        console.log('GameManager.leaveGame: '+game.ID);
+        this.removePlayer(socket.id);
+    }
+
+    return game;
+}
+
+GameManager.prototype.setSocketData = function(socket, rtc, event, game){
+    //here we join this socket on a private chanel for the created game state
+    socket.join(game.ID);
+    rtc.to(game.ID).emit(event, game);
+
+    //emit a system message to the game chat
+    rtc.to(game.ID).emit('chatMsg', {gameID: game.ID, actor: 'system', msg: 'Player entered the game'});
+
+    //here set the state of this socket as in game and dont allow create any more games until true
+    socket.game = game;
+}
+
 GameManager.prototype.removeGame = function(gameID){
     var removed = false;
     var games = this.gamesList;
@@ -59,6 +84,39 @@ GameManager.prototype.getGameBySocketID = function(socketID){
     return game;
 }
 
+GameManager.prototype.getGameByGameID = function(gameID){
+    var game;
+    var games = this.gamesList;
+
+    console.log('GameManager.getGameByGameID - gameID: '+gameID);
+
+    for(var i in games){
+        if(games[i].ID == gameID){
+            game = games[i];
+        }
+    }
+
+    return game;
+}
+
+GameManager.prototype.addPlayer = function(socket, gameID){
+    var game = this.getGameByGameID(gameID);
+    var added = false;
+
+    console.log('GameManager.addPlayer game:'+game);
+
+    if(game){
+        console.log('GameManager.addPlayer game:'+game.stateObject.playerList.length);
+        if(game.stateObject.playerList.length < 2){
+            game.addPlayer(socket.id);
+            added = true;
+        }
+    }
+    
+
+    return added;
+}
+
 GameManager.prototype.removePlayer = function(socketID){
     var game = this.getGameBySocketID(socketID);
 
@@ -69,7 +127,7 @@ GameManager.prototype.removePlayer = function(socketID){
         if(game.stateObject.playerList.length == 0){
             game.destroy();
             this.removeGame(game.ID);
-            console.log('GameManager.removePlayer - ', this.gamesList);
+            console.log('GameManager.removePlayer - removing game: ', game.ID);
         }
     }
 }

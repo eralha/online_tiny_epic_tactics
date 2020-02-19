@@ -118,6 +118,7 @@ define('module/angular/services/main', [], function () {
 		module.service('dataService', ['$q', '$http', '$filter', 'langService', '$rootScope', function($q, $http, $filter, langService, $rootScope) {
 
 			sup = this;
+			var chatMessages = {};
 
 			var socket = io.connect('/rtc');
             
@@ -125,8 +126,19 @@ define('module/angular/services/main', [], function () {
                     console.log('Connected', socket);
                 });
 
-                socket.on('msg', function (data) {
-                    console.log('received', data);
+                socket.on('chatMsg', function (data) {
+					//if there is not an object for this game chat create one
+					if(!chatMessages[data.gameID]){
+						chatMessages[data.gameID] = new Array();
+					}
+
+					//append the message for this game chat object
+					chatMessages[data.gameID].push(data);
+
+					$rootScope.$emit('chatMsgReceived', data);
+					$rootScope.$apply();
+
+                    console.log('received', data, 'currmsgs ', chatMessages[data.gameID]);
 				});
 
 				socket.on('createGameSuccess', function (data) {
@@ -134,16 +146,23 @@ define('module/angular/services/main', [], function () {
                     console.log('RTC createGameSuccess', data);
 				});
 
-				socket.on('emit', function (data) {
-                    console.log('received', data, $rootScope);
+				socket.on('joinGameSuccess', function (data) {
+					$rootScope.$emit('joinGameSuccess', data);
+                    console.log('RTC joinGameSuccess', data);
 				});
 
 				socket.on('gameListUpdate', function (data) {
+					$rootScope.gameList = data;
+					$rootScope.$apply();
                     console.log('RTC gameListUpdate', data);
 				});
 
 			//assign the socket to a service variable
 			this.socket = socket;
+
+			this.joinGame = function(gameID){
+				socket.emit('joinGame', gameID);
+			}
 				
 			this.createNewGame = function(GameName){
 				socket.emit('createGame', {name: GameName});
@@ -151,6 +170,10 @@ define('module/angular/services/main', [], function () {
 
 			this.leaveGame = function(){
 				socket.emit('leaveGame');
+			}
+
+			this.getChatMessages = function(gameID){
+				return chatMessages[gameID];
 			}
 
 

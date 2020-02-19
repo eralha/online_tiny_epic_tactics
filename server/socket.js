@@ -8,33 +8,49 @@ module.exports = function (server) {
 	var io = require('socket.io')(server);
 	var rtc = io.of('/rtc').on('connection', function (socket) {
 
+		//here we emit to the connecting socket a the game list
+		socket.emit('gameListUpdate', GameManager.getGamesList());
+
 		//send user list to all sockets when socket disconnect
 		socket.on('disconnect', function (data, callback) {
-			console.log(socket.id);
-			rtc.emit('socketDisconnected', socket.id);
+			console.log('RTC disconnect: ', socket.id);
 
-			//when user disconnects emit to all players
-			//rtc.emit('userList', 'userList');
+			//remove this socket from his game
+			var game = GameManager.leaveGame(socket);
+
+			if(game && socket.game){
+				//here we emit to all sockets a new game list
+				rtc.emit('gameListUpdate', GameManager.getGamesList());
+				//send a notification to chat log
+				rtc.to(game.ID).emit('chatMsg', {gameID: game.ID, actor: 'system', msg: 'Player quit'});
+			}
 		});
 
-		socket.on('joinGame', function (data) {
-			console.log('joined a new game', data.GameName);
+		socket.on('joinGame', function (gameID) {
+			if(socket.game){ return; }
+			
+			var added = GameManager.addPlayer(socket, gameID);
+
+			console.log('RTC joinGame: ', gameID, ' added: ', added);
+
+			if(added){
+				var game = GameManager.getGameByGameID(gameID);
+				GameManager.setSocketData(socket, rtc, 'joinGameSuccess', game);
+			}
 		});
 
 		socket.on('leaveGame', function (data) {
-			//get the game for this socket
-			var game = GameManager.getGameBySocketID(socket.id);
-
-			console.log('RTC leaveGame: '+game);
+			//remove this socket from his game
+			var game = GameManager.leaveGame(socket);
 
 			//if we found a game for this socket, remove it from this game
 			if(game){
 				socket.game = null;
 				socket.leave(game.ID);
-				GameManager.removePlayer(socket.id);
-
 				//here we emit to all sockets a new game list
 				rtc.emit('gameListUpdate', GameManager.getGamesList());
+				//send a notification to chat log
+				rtc.to(game.ID).emit('chatMsg', {gameID: game.ID, actor: 'system', msg: 'Player quit'});
 			}
 		});
 
@@ -44,13 +60,7 @@ module.exports = function (server) {
 
 			//if not create a new game 
 			var game = GameManager.createGame(socket, data.name);
-
-			//here we join this socket on a private chanel for the created game state
-			socket.join(game.ID);
-			rtc.to(game.ID).emit('createGameSuccess', game);
-
-			//here set the state of this socket as in game and dont allow create any more games until true
-			socket.game = game;
+				GameManager.setSocketData(socket, rtc, 'createGameSuccess', game);
 
 			//here we emit to all sockets a new game list
 			rtc.emit('gameListUpdate', GameManager.getGamesList());
