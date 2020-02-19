@@ -88,6 +88,11 @@ h1, h2, h3, h4, h5, h6 { .reset; }
   }
 }
 
+.c-main__container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
 
 .l-home_pannel {
   width: 600px;
@@ -130,6 +135,41 @@ h1, h2, h3, h4, h5, h6 { .reset; }
   }
 }
 
+.c-game_panel {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: ~"calc(100% - 250px);";
+  height: 100%;
+  background-color: rgb(226, 226, 226);
+}
+.c-chat_panel {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  width: 250px;
+  height: 100%;
+  padding: 10px;
+  background-color: #fff;
+  .boxsizing;
+
+  .msg {
+    clear: both;
+    float: left;
+    max-width: 100%;
+    margin-bottom: 10px;
+    padding: 5px 10px;
+    font-size: 12px;
+    color: rgb(39, 39, 39);
+    background-color: rgb(209, 209, 209);
+    .rounded(3px);
+  }
+  .msg.own {
+    float: right;
+    color: #fff;
+    background-color: rgb(51, 117, 204);
+  }
+}
 
 @import "_editor.less";
 

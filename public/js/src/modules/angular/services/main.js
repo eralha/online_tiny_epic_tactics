@@ -126,15 +126,31 @@ define('module/angular/services/main', [], function () {
                 });
 
                 socket.on('msg', function (data) {
-                    console.log('received', data, $rootScope);
+                    console.log('received', data);
+				});
+
+				socket.on('createGameSuccess', function (data) {
+					$rootScope.$emit('createGameSuccess', data);
+                    console.log('RTC createGameSuccess', data);
 				});
 
 				socket.on('emit', function (data) {
                     console.log('received', data, $rootScope);
 				});
+
+				socket.on('gameListUpdate', function (data) {
+                    console.log('RTC gameListUpdate', data);
+				});
+
+			//assign the socket to a service variable
+			this.socket = socket;
 				
 			this.createNewGame = function(GameName){
 				socket.emit('createGame', {name: GameName});
+			}
+
+			this.leaveGame = function(){
+				socket.emit('leaveGame');
 			}
 
 

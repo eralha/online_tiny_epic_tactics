@@ -17,7 +17,8 @@ define('module/angular/controllers/GameCtrll', [
 		app.controller('GameCtrll', ['$scope', '$rootScope', 'dataService', 'gameDataService', 'ngProgressFactory', '$state', '$sce', '$filter',
 		function(scope, $rootScope, dataService, gameDataService, ngProgressFactory, $state, $sce, $filter) {
 
-            
+			//If a game object does not exist for this state change to home view
+            if(!$rootScope.game){ $state.go('home'); }
 
 		}]);
 

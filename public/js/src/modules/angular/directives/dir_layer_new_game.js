@@ -12,8 +12,16 @@ define('module/angular/directives/dir_layer_new_game', [
                     //console.log($(e).html(), arguments);
                     return function(scope, elem, attrs) {
 
+                        scope.form = {};
+
                         scope.createNewGame = function(){
+                            if(!scope.form.GameName){ return; }
                             dataService.createNewGame(scope.form.GameName, scope.form.GamePass);
+
+                            var offEvent = $rootScope.$on('createGameSuccess', function(e, game){
+                                offEvent();
+                                $(elem).remove();
+                            });
                         }
 
                     }

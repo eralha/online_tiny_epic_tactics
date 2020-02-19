@@ -15,16 +15,16 @@ function HeroObject(){
     }
 }
 
-function PlayerObject(socket){
+function PlayerObject(socketID){
     this.data = {
-        socket: socket,
+        socketID: socketID,
         heroes: [],
     }
 }
 
 function GameState(){
     this.stateObject = {
-        players: [],
+        playerList: [],
         flags: [
             {
                 id: 'flag1',
@@ -44,15 +44,38 @@ function GameState(){
         ]
     };
     
-    this.sockets = new Array();
+    this.socketList = new Array();
+    this.stateObject.playerList = new Array();
     this.ID = 'Game_State_id_'+Math.random()*10000000;
 }
 
-GameState.prototype.addPlayer = function(socket){
-    this.sockets.push(socket);
+GameState.prototype.destroy = function(){
+    delete this.stateObject;
+    delete this.socketList;
+    delete this;
+}
 
-    var player = new PlayerObject(socket);
+GameState.prototype.addPlayer = function(socketID){
+    var player = new PlayerObject(socketID);
         player.data.heroes.push(new HeroObject());
+
+    this.stateObject.playerList.push(player);
+
+    //add the socket id to a list for help sorting and geting games by this id
+    this.socketList.push(socketID);
+}
+
+GameState.prototype.removePlayer = function(socketID){
+    var players = this.stateObject.playerList;
+
+    for(var i in players){
+        //if found player remove it from array
+        if(players[i].data.socketID == socketID){
+            players.splice(i, 1);
+        }
+    }
+
+    return this.stateObject.playerList;
 }
 
 module.exports = GameState;

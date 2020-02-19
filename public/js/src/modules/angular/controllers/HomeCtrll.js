@@ -17,7 +17,15 @@ define('module/angular/controllers/HomeCtrll', [
 		app.controller('HomeCtrll', ['$scope', '$rootScope', 'dataService', 'gameDataService', 'ngProgressFactory', '$state', '$sce', '$filter',
 		function(scope, $rootScope, dataService, gameDataService, ngProgressFactory, $state, $sce, $filter) {
 
-			
+			$rootScope.$on('createGameSuccess', function(e, game){
+				$rootScope.game = game;
+				$state.go('game', {gameID: game.ID});
+			});
+
+			//force remove this socket from any game
+			console.log('HomeCtrll - removing from game');
+			$rootScope.game = null;
+			dataService.leaveGame();
 
 		}]);
 
