@@ -126,7 +126,7 @@ define('module/angular/services/main', [], function () {
                     console.log('Connected', socket);
                 });
 
-                socket.on('chatMsg', function (data) {
+                socket.on('chatMsgServerClient', function (data) {
 					//if there is not an object for this game chat create one
 					if(!chatMessages[data.gameID]){
 						chatMessages[data.gameID] = new Array();
@@ -174,6 +174,10 @@ define('module/angular/services/main', [], function () {
 
 			this.getChatMessages = function(gameID){
 				return chatMessages[gameID];
+			}
+
+			this.sendChatMessage = function(gameID, msg){
+				socket.emit('chatMsgClientServer', {gameID: gameID, msg: msg});
 			}
 
 

@@ -18,6 +18,7 @@ function HeroObject(){
 function PlayerObject(socketID){
     this.data = {
         socketID: socketID,
+        playerNumber: 0,
         heroes: [],
     }
 }
@@ -65,7 +66,18 @@ GameState.prototype.destroy = function(){
 GameState.prototype.addPlayer = function(socketID){
     var player = new PlayerObject(socketID);
 
+        //add 1 hero of each type to the player
         player.data.heroes.push(new HeroObject());
+
+    //set a player number
+    if(this.stateObject.playerList.length == 0){
+        player.data.playerNumber = 1;
+    }
+    //check the player number for an existing player
+    if(this.stateObject.playerList.length >= 1){
+        var currPlayer = this.stateObject.playerList[0];
+        player.data.playerNumber = (currPlayer.data.playerNumber == 1) ? 2 : 1;
+    }
 
     this.stateObject.playerList.push(player);
 

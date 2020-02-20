@@ -150,7 +150,7 @@ h1, h2, h3, h4, h5, h6 { .reset; }
   width: 250px;
   height: 100%;
   padding: 10px;
-  padding-bottom: 70px;
+  padding-bottom: 100px;
   background-color: #fff;
   overflow: hidden;
   .boxsizing;
@@ -170,6 +170,26 @@ h1, h2, h3, h4, h5, h6 { .reset; }
     float: right;
     color: #fff;
     background-color: rgb(51, 117, 204);
+  }
+  .msg.system {
+    width: 100%;
+    font-size: 10px;
+    text-align: center;
+    background-color: rgb(240, 240, 240);
+  }
+  .form-inline {
+    position: fixed;
+    right: 0px;
+    bottom: 0px;
+    width: 250px;
+    padding: 10px;
+    .boxsizing;
+    input[type="text"] { 
+      width: 100%; 
+      font-size: 14px;
+    }
+    .form-group { width: 100%; }
+    .btn { margin-left: 10px; }
   }
 }
 

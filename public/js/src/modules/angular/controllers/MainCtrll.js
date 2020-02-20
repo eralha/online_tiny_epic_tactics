@@ -38,22 +38,6 @@ define('module/angular/controllers/MainCtrll', [], function () {
 			$scope.menuVisible = !$scope.menuVisible;
 		}
 
-		$rootScope.addLayerDice = function(dice, sheetName){
-			//$rootScope.scrollToElement('.JS_ATK_DEF_INFO');
-			var compiled = $compile('<div dir-Layer></div>')($scope);
-			
-			$('body').append(compiled);
-		}
-
-		$rootScope.addLayerItemInfo = function(item){
-			var layerScope = $scope.$new(true);
-				layerScope.item = item;
-
-			var compiled = $compile('<div dir-Layer></div>')(layerScope);
-			
-			$('body').append(compiled);
-		}
-
 		$rootScope.addLayer = function(layerName){
 			var layerScope = $scope.$new(true);
 

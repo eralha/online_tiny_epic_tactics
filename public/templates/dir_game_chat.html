@@ -1,4 +1,11 @@
 ﻿
 <div class="c-chat_panel">
-    <div class="msg" ng-repeat="msg in chatMsgs">{{msg.msg}}</div>
+    <div class="msg {{msg.actor}}" ng-class="{'own' : socketID == msg.socketID}" ng-repeat="msg in chatMsgs">{{msg.msg}}</div>
+
+    <form class="form-inline">
+        <div class="form-group">
+            <input type="text" class="form-control" id="message" ng-model="form.message" placeholder="Message">
+            <button type="submit" class="hidden btn btn-primary" ng-click="sendChatMessage();">»</button>
+        </div>
+    </form>
 </div>

@@ -17,14 +17,17 @@ define('module/angular/controllers/HomeCtrll', [
 		app.controller('HomeCtrll', ['$scope', '$rootScope', 'dataService', 'gameDataService', 'ngProgressFactory', '$state', '$sce', '$filter',
 		function(scope, $rootScope, dataService, gameDataService, ngProgressFactory, $state, $sce, $filter) {
 
-			var OFFcreateGameSuccess = $rootScope.$on('createGameSuccess', function(e, game){
+			function enterGame(game){
 				$rootScope.game = game;
 				$state.go('game', {gameID: game.ID});
+			}
+			
+			var OFFcreateGameSuccess = $rootScope.$on('createGameSuccess', function(e, game){
+				enterGame(game);
 			});
 
 			var OFFjoinGameSuccess = $rootScope.$on('joinGameSuccess', function(e, game){
-				$rootScope.game = game;
-				$state.go('game', {gameID: game.ID});
+				enterGame(game);
 			});
 
 			$rootScope.$on('$viewContentLoading', 

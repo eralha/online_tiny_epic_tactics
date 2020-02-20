@@ -22,7 +22,17 @@ module.exports = function (server) {
 				//here we emit to all sockets a new game list
 				rtc.emit('gameListUpdate', GameManager.getGamesList());
 				//send a notification to chat log
-				rtc.to(game.ID).emit('chatMsg', {gameID: game.ID, actor: 'system', msg: 'Player quit'});
+				rtc.to(game.ID).emit('chatMsgServerClient', {gameID: game.ID, actor: 'system', msg: 'Player quit'});
+			}
+		});
+
+		socket.on('chatMsgClientServer', function (data) {
+			if(!socket.game){ return; }
+
+			console.log('RTC chatMsgClientServer: ', data.gameID, ' msg: ');
+
+			if(socket.game.ID == data.gameID){
+				rtc.to(socket.game.ID).emit('chatMsgServerClient', {gameID: data.gameID, actor: 'player', msg: data.msg, socketID: socket.id});
 			}
 		});
 
@@ -50,7 +60,7 @@ module.exports = function (server) {
 				//here we emit to all sockets a new game list
 				rtc.emit('gameListUpdate', GameManager.getGamesList());
 				//send a notification to chat log
-				rtc.to(game.ID).emit('chatMsg', {gameID: game.ID, actor: 'system', msg: 'Player quit'});
+				rtc.to(game.ID).emit('chatMsgServerClient', {gameID: game.ID, actor: 'system', msg: 'Player quit'});
 			}
 		});
 

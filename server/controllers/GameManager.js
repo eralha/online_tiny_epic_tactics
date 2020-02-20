@@ -37,7 +37,7 @@ GameManager.prototype.setSocketData = function(socket, rtc, event, game){
     rtc.to(game.ID).emit(event, game);
 
     //emit a system message to the game chat
-    rtc.to(game.ID).emit('chatMsg', {gameID: game.ID, actor: 'system', msg: 'Player entered the game'});
+    rtc.to(game.ID).emit('chatMsgServerClient', {gameID: game.ID, actor: 'system', msg: 'Player entered the game'});
 
     //here set the state of this socket as in game and dont allow create any more games until true
     socket.game = game;
