@@ -142,7 +142,22 @@ h1, h2, h3, h4, h5, h6 { .reset; }
   width: ~"calc(100% - 250px);";
   height: 100%;
   background-color: rgb(226, 226, 226);
+  overflow: hidden;
+
+  .meeple {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 70px;
+    height: 140px;
+    cursor: pointer;
+    &.wizard { background-color: rgb(0, 132, 255); }
+    &.rogue { background-color: rgb(144, 25, 173); }
+    &.knight { background-color: rgb(201, 111, 37); }
+    &.beast { background-color: rgb(18, 161, 46) }
+  }
 }
+
 .c-chat_panel {
   position: absolute;
   top: 0px;

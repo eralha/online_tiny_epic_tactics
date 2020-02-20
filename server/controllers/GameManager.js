@@ -34,10 +34,13 @@ GameManager.prototype.leaveGame = function(socket){
 GameManager.prototype.setSocketData = function(socket, rtc, event, game){
     //here we join this socket on a private chanel for the created game state
     socket.join(game.ID);
-    rtc.to(game.ID).emit(event, game);
+    rtc.to(game.ID).emit(event, {ID: game.ID, socketList: game.socketList, name: game.name});
 
     //emit a system message to the game chat
     rtc.to(game.ID).emit('chatMsgServerClient', {gameID: game.ID, actor: 'system', msg: 'Player entered the game'});
+
+    //emit the new game state to all players
+    rtc.to(game.ID).emit('gameStateUpdated', {ID: game.ID, state: game.stateObject});
 
     //here set the state of this socket as in game and dont allow create any more games until true
     socket.game = game;

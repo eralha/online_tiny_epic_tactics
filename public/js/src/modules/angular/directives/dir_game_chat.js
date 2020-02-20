@@ -15,7 +15,7 @@ define('module/angular/directives/dir_game_chat', [
                     return function(scope, elem, attrs) {
 
                         scope.form = {};
-                        scope.socketID = '/rtc#'+dataService.socket.id;
+                        scope.socketID = dataService.getSocketId();
                         
                         //get current chat messages if any
                         scope.getChatMsgs = function(){

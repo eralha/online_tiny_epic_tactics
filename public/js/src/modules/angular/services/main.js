@@ -119,6 +119,7 @@ define('module/angular/services/main', [], function () {
 
 			sup = this;
 			var chatMessages = {};
+			var gameStates = {};
 
 			var socket = io.connect('/rtc');
             
@@ -157,8 +158,26 @@ define('module/angular/services/main', [], function () {
                     console.log('RTC gameListUpdate', data);
 				});
 
+				socket.on('gameStateUpdated', function (data) {
+					gameStates[data.ID] = data.state;
+					$rootScope.$emit('gameStateUpdated', data.state);
+                    console.log('RTC gameStateUpdated', data);
+				});
+
 			//assign the socket to a service variable
 			this.socket = socket;
+
+			this.getGameSate = function(gameID){
+				return gameStates[gameID];
+			}
+
+			this.updateGameState = function(gameID, state){
+				socket.emit('upateGameState', {gameID, gameID, stateObject: state});
+			}
+
+			this.getSocketId = function(gameID){
+				return '/rtc#'+this.socket.id;
+			}
 
 			this.joinGame = function(gameID){
 				socket.emit('joinGame', gameID);

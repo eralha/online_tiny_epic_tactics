@@ -78,6 +78,19 @@ module.exports = function (server) {
 			console.log('RTC createGame:', socket.id, '| game id:', game.ID);
 		});
 
+		socket.on('upateGameState', function (data) {
+			//check if socket is allready on a game
+			if(!socket.game){ return; }
+			//some checks to be shure that this socket can change this game state and have a valid state
+			if(socket.game.ID != data.gameID || !data.stateObject){ return; }
+
+			//get the game state
+			var game = GameManager.getGameByGameID(data.gameID);
+				game.stateObject = data.stateObject;
+
+			rtc.to(game.ID).emit('gameStateUpdated', {ID: game.ID, state: game.stateObject});
+		});
+
 		//É usado para receber as mensagens de chat 
 		socket.on('emit', function (data, callback) {
 			//rtc.emit('msg', data); //everyone in RTC chanel will get this, even the socket calling it

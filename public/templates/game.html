@@ -1,4 +1,11 @@
 ﻿
-<div class="c-game_panel"></div>
+<div class="c-game_panel" ng-if="gameState">
+
+    <div class="meeple player1 wizard" dir-Elem-Drag linked="player1.data.heroes.wizard"></div>
+    <div class="meeple player1 rogue" dir-Elem-Drag linked="player1.data.heroes.rogue"></div>
+    <div class="meeple player1 knight" dir-Elem-Drag linked="player1.data.heroes.knight"></div>
+    <div class="meeple player1 beast" dir-Elem-Drag linked="player1.data.heroes.beast"></div>
+
+</div>
 
 <div dir-game-chat></div>

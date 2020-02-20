@@ -19,13 +19,13 @@ function PlayerObject(socketID){
     this.data = {
         socketID: socketID,
         playerNumber: 0,
-        heroes: [],
+        heroes: {},
     }
 }
 
 function GameState(){
-    var imagesAssetsPath = config.imagesAssetsPath;
-    var heroesStartPosiData = {
+    this.imagesAssetsPath = config.imagesAssetsPath;
+    this.heroesStartPosiData = {
         wizard: {
             player1: { x:0, y: 0},
             player2: { x:0, y: 0}
@@ -43,7 +43,7 @@ function GameState(){
             player2: { x:0, y: 0}
         }
     };
-    var heroesImgData = {
+    this.heroesImgData = {
         wizard: [],
         rogue: [],
         knight: [],
@@ -82,7 +82,7 @@ GameState.prototype.destroy = function(){
 }
 
 GameState.prototype.setRandomHero = function(type, player){
-    player.data.heroes.push(new HeroObject());
+    player.data.heroes[type] = new HeroObject();
 }
 
 GameState.prototype.addPlayer = function(socketID){
