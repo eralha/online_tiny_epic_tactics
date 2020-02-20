@@ -6,8 +6,8 @@ var config = require('../config');
 function HeroObject(){
     this.data = {
         img: '',
-        posiX: 0,
-        posiY: 0,
+        x: 0,
+        y: 0,
         life: 0,
         mana: 0,
         ammo: 0,
@@ -24,8 +24,26 @@ function PlayerObject(socketID){
 }
 
 function GameState(){
-    this.imagesAssetsPath = config.imagesAssetsPath;
-    this.heroesData = {
+    var imagesAssetsPath = config.imagesAssetsPath;
+    var heroesStartPosiData = {
+        wizard: {
+            player1: { x:0, y: 0},
+            player2: { x:0, y: 0}
+        },
+        rogue: {
+            player1: { x:0, y: 0},
+            player2: { x:0, y: 0}
+        },
+        knight: {
+            player1: { x:0, y: 0},
+            player2: { x:0, y: 0}
+        },
+        beast: {
+            player1: { x:0, y: 0},
+            player2: { x:0, y: 0}
+        }
+    };
+    var heroesImgData = {
         wizard: [],
         rogue: [],
         knight: [],
@@ -36,18 +54,18 @@ function GameState(){
         flags: [
             {
                 id: 'flag1',
-                posiX: 0,
-                posiY: 0
+                x: 0,
+                y: 0
             },
             {
                 id: 'flag2',
-                posiX: 0,
-                posiY: 0
+                x: 0,
+                y: 0
             },
             {
                 id: 'flag3',
-                posiX: 0,
-                posiY: 0
+                x: 0,
+                y: 0
             },
         ]
     };
@@ -63,11 +81,12 @@ GameState.prototype.destroy = function(){
     delete this;
 }
 
+GameState.prototype.setRandomHero = function(type, player){
+    player.data.heroes.push(new HeroObject());
+}
+
 GameState.prototype.addPlayer = function(socketID){
     var player = new PlayerObject(socketID);
-
-        //add 1 hero of each type to the player
-        player.data.heroes.push(new HeroObject());
 
     //set a player number
     if(this.stateObject.playerList.length == 0){
@@ -78,6 +97,12 @@ GameState.prototype.addPlayer = function(socketID){
         var currPlayer = this.stateObject.playerList[0];
         player.data.playerNumber = (currPlayer.data.playerNumber == 1) ? 2 : 1;
     }
+
+    //add 1 hero of each type to the player
+    this.setRandomHero('wizard', player);
+    this.setRandomHero('rogue', player);
+    this.setRandomHero('knight', player);
+    this.setRandomHero('beast', player);
 
     this.stateObject.playerList.push(player);
 

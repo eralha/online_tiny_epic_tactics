@@ -29,7 +29,7 @@ module.exports = function (server) {
 		socket.on('chatMsgClientServer', function (data) {
 			if(!socket.game){ return; }
 
-			console.log('RTC chatMsgClientServer: ', data.gameID, ' msg: ');
+			console.log('RTC chatMsgClientServer: ', data.gameID, ' msg: '+data.msg);
 
 			if(socket.game.ID == data.gameID){
 				rtc.to(socket.game.ID).emit('chatMsgServerClient', {gameID: data.gameID, actor: 'player', msg: data.msg, socketID: socket.id});
