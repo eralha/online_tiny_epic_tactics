@@ -83,10 +83,6 @@ define('module/angular/controllers/GameCtrll', [
 				scope.$apply();
 			}//end mapStateObjectsToScopeVars
 
-			function setLogger(){
-				
-			}
-
 			var OFFgameStateUpdated = $rootScope.$on('gameStateUpdated', function(e, gameState){
 				scope.gameState = gameState;
 				mapStateObjectsToScopeVars();
