@@ -199,6 +199,10 @@ define('module/angular/services/main', [], function () {
 				socket.emit('chatMsgClientServer', {gameID: gameID, msg: msg});
 			}
 
+			this.logPlayerChange = function(gameID, msg){
+				socket.emit('chatMsgClientServer', {gameID: gameID, msg: msg});
+			}
+
 
             return this;
         }]);

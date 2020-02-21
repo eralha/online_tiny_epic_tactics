@@ -116,7 +116,6 @@ GameManager.prototype.addPlayer = function(socket, gameID){
         }
     }
     
-
     return added;
 }
 

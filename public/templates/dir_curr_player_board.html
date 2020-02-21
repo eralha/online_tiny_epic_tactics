@@ -1,0 +1,19 @@
+﻿<div class="c-curr_player_board" ng-class="{'open' : boardOpen}">
+    <div class="card card--small" ng-click="toggleBoard();">
+        <div class="card-header">
+            <i class="fas fa-arrow-down" ng-if="boardOpen"></i>
+            <i class="fas fa-arrow-up" ng-if="!boardOpen"></i> 
+            You area Player: {{currentPlayer.data.playerNumber}}
+        </div>
+    </div>
+    <div class="card card--full">
+        <div class="card-body">
+
+            <div dir-Curr-Player-Hero hero="currentPlayer.data.heroes.wizard"></div>
+            <div dir-Curr-Player-Hero hero="currentPlayer.data.heroes.rogue"></div>
+            <div dir-Curr-Player-Hero hero="currentPlayer.data.heroes.knight"></div>
+            <div dir-Curr-Player-Hero hero="currentPlayer.data.heroes.beast"></div>
+
+        </div>
+    </div>
+</div>

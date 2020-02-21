@@ -32,6 +32,8 @@ define('module/angular/controllers/GameCtrll', [
 		app.controller('GameCtrll', ['$scope', '$rootScope', 'dataService', 'gameDataService', 'ngProgressFactory', '$state', '$sce', '$filter',
 		function(scope, $rootScope, dataService, gameDataService, ngProgressFactory, $state, $sce, $filter) {
 
+			//init some vars
+
 			//If a game object does not exist for this state change to home view
 			if(!$rootScope.game){ 
 				$state.go('home'); 
@@ -41,14 +43,24 @@ define('module/angular/controllers/GameCtrll', [
 			//log game 
 			console.log('GameCtrll', $rootScope.game);
 
+			//listen for changes on the game object and update the server
 			var callStateUpdate = debounce(function() {
 				dataService.updateGameState($rootScope.game.ID, scope.gameState);
 			}, 10);
 			scope.$watch('gameState', function(){
-				console.log('GameCtrll gameState watch:', scope.gameState);
-
+				//console.log('GameCtrll gameState watch:', scope.gameState);
 				callStateUpdate();
 			}, true);
+
+			//logger for diferent object types
+				var callLogger1 = debounce(function() {
+					//call logger here
+					var playerNumber = scope.currentPlayer.data.playerNumber;
+					dataService.logPlayerChange($rootScope.game.ID, 'Player '+playerNumber+' Moved/Changed a hero');
+				}, 1000);
+				scope.$watch('currentPlayer', function(){
+					callLogger1();
+				}, true);
 
 			//get game state if it exists
 			scope.gameState = dataService.getGameSate($rootScope.game.ID);
@@ -70,6 +82,10 @@ define('module/angular/controllers/GameCtrll', [
 
 				scope.$apply();
 			}//end mapStateObjectsToScopeVars
+
+			function setLogger(){
+				
+			}
 
 			var OFFgameStateUpdated = $rootScope.$on('gameStateUpdated', function(e, gameState){
 				scope.gameState = gameState;

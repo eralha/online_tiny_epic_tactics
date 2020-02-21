@@ -69,8 +69,8 @@ define('module/angular/directives/dir_elem_drag', [
                             xOffset = currentX;
                             yOffset = currentY;
 
-                            scope.posiObj.data.x = currentX;
-                            scope.posiObj.data.y = currentY;
+                            scope.posiObj.x = currentX;
+                            scope.posiObj.y = currentY;
 
                             scope.$apply();
                     
@@ -83,12 +83,11 @@ define('module/angular/directives/dir_elem_drag', [
                         }
 
                         scope.$watch('posiObj', function(){
-                            if(scope.posiObj.data){
-                                xOffset = scope.posiObj.data.x;
-                                yOffset = scope.posiObj.data.y;
-                                setTranslate(scope.posiObj.data.x, scope.posiObj.data.y, dragItem);
+                            if(scope.posiObj){
+                                xOffset = scope.posiObj.x;
+                                yOffset = scope.posiObj.y;
+                                setTranslate(scope.posiObj.x, scope.posiObj.y, dragItem);
                             }
-                            console.log(scope.posiObj)
                         }, true);
 
                     }

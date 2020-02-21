@@ -142,19 +142,69 @@ h1, h2, h3, h4, h5, h6 { .reset; }
   width: ~"calc(100% - 250px);";
   height: 100%;
   background-color: rgb(226, 226, 226);
-  overflow: hidden;
+  overflow: auto;
 
   .meeple {
     position: absolute;
     left: 0px;
     top: 0px;
-    width: 70px;
-    height: 140px;
+    width: 30px;
+    height: 30px;
     cursor: pointer;
     &.wizard { background-color: rgb(0, 132, 255); }
     &.rogue { background-color: rgb(144, 25, 173); }
     &.knight { background-color: rgb(201, 111, 37); }
     &.beast { background-color: rgb(18, 161, 46) }
+  }
+  .game_container {
+    width: 1400px;
+    height: 998px;
+    overflow: hidden;
+  }
+  .mapa {
+    width: 1400px;
+    height: 998px;
+    background-repeat: no-repeat;
+    background-position: center;
+    //background-image: url('/images/mapa.png');
+    //background-color: #b3b3b3;
+  }
+}
+
+.c-curr_player_board {
+  position: fixed;
+  z-index: 10;
+  left: 0px;
+  bottom: -240px;
+  width: ~"calc(100% - 250px);";
+  .transition(0.4s);
+
+  &.open { bottom: 0px; }
+  .card-header { cursor: pointer; }
+  .card--small { width: 189px; }
+  .card--full { 
+    width: 100%; 
+    [dir-Curr-Player-Hero] {
+      float: left;
+      margin-right: 20px;
+    }
+  }
+}
+
+.c-hero_display {
+  img { margin-bottom: 10px; }
+  .stat {
+    margin-bottom: 3px;
+    &.red { color: rgb(255, 0, 106); }
+    &.blue { color: rgb(0, 140, 255); }
+    &.green { color: rgb(103, 204, 8); }
+    .btn {
+      width: 20px;
+      height: 20px;
+      line-height: 20px;
+      padding: 0;
+    }
+    .fas { width: 20px;}
   }
 }
 

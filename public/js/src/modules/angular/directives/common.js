@@ -2,7 +2,9 @@ define('module/angular/directives/common', [
 	'module/angular/directives/main',
 	'module/angular/directives/dir_layer_new_game',
 	'module/angular/directives/dir_game_chat',
-	'module/angular/directives/dir_elem_drag'
+	'module/angular/directives/dir_elem_drag',
+	'module/angular/directives/dir_curr_player_board',
+	'module/angular/directives/dir_curr_player_hero'
 ], function (module) {
 
 

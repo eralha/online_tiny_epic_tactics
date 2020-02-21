@@ -1,11 +1,15 @@
 ﻿
+<div dir-Curr-Player-Board current-Player="currentPlayer"></div>
+
 <div class="c-game_panel" ng-if="gameState">
+    <div class="game_container">
+        <div class="mapa"></div>
 
-    <div class="meeple player1 wizard" dir-Elem-Drag linked="player1.data.heroes.wizard"></div>
-    <div class="meeple player1 rogue" dir-Elem-Drag linked="player1.data.heroes.rogue"></div>
-    <div class="meeple player1 knight" dir-Elem-Drag linked="player1.data.heroes.knight"></div>
-    <div class="meeple player1 beast" dir-Elem-Drag linked="player1.data.heroes.beast"></div>
-
+        <div class="meeple player1 wizard" dir-Elem-Drag linked="player1.data.heroes.wizard.posi"></div>
+        <div class="meeple player1 rogue" dir-Elem-Drag linked="player1.data.heroes.rogue.posi"></div>
+        <div class="meeple player1 knight" dir-Elem-Drag linked="player1.data.heroes.knight.posi"></div>
+        <div class="meeple player1 beast" dir-Elem-Drag linked="player1.data.heroes.beast.posi"></div>
+    </div>
 </div>
 
 <div dir-game-chat></div>

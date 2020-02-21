@@ -4,10 +4,12 @@ var querys = require('../querys');
 var config = require('../config');
 
 function HeroObject(){
+    this.posi = {
+        x: 0,
+        y: 0
+    };
     this.data = {
         img: '',
-        x: 0,
-        y: 0,
         life: 0,
         mana: 0,
         ammo: 0,

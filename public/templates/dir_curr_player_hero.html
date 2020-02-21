@@ -1,0 +1,21 @@
+﻿<div class="c-hero_display">
+    <img src="https://via.placeholder.com/100x200" alt="" />
+    <div class="stat red">
+        <i class="fas fa-heart"></i>
+        <button type="button" class="btn btn-secondary" ng-click="remValue('life');">-</button>
+            <span>{{hero.data.life}}</span>
+        <button type="button" class="btn btn-secondary" ng-click="addValue('life');">+</button>
+    </div>
+    <div class="stat green">
+        <i class="fas fa-bow-arrow"></i>
+        <button type="button" class="btn btn-secondary" ng-click="remValue('ammo');">-</button>
+            <span>{{hero.data.ammo}}</span>
+        <button type="button" class="btn btn-secondary" ng-click="addValue('ammo');">+</button>
+    </div>
+    <div class="stat blue">
+        <i class="fas fa-flask-potion"></i>
+        <button type="button" class="btn btn-secondary" ng-click="remValue('mana');">-</button>
+            <span>{{hero.data.mana}}</span>
+        <button type="button" class="btn btn-secondary" ng-click="addValue('mana');">+</button>
+    </div>
+</div>
