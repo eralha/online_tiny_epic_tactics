@@ -19,7 +19,7 @@
     "pg": "*",
     "q": "*",
     "sha256": "^0.2.0",
-    "socket.io": "~1.4.5"
+    "socket.io": "~4.5.3"
   },
   "dependencies": {
     "express": "*",
